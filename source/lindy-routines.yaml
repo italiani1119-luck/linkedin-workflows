@@ -1,0 +1,52 @@
+# LinkedIn routines — configuration source snapshot
+# Export date: 2026-10-22
+# Time zone: Asia/Jakarta
+# This is a backup/record of Lindy routine definitions, not a standalone executable
+# or an import file. The live automation continues to run in Lindy.
+
+version: 1
+routines:
+  - id: 6ad9735a0ae39154de1432b7
+    name: LinkedIn remote job matches
+    enabled: true
+    schedule:
+      type: daily_multi_time
+      times: ["05:00", "09:00", "13:00", "17:00", "22:00"]
+      timezone: Asia/Jakarta
+    instructions: |
+      Search recent LinkedIn job listings for remote worldwide opportunities that fit the user's background in procurement, executive assistance, personal assistance, virtual assistance, and administrative support. Read /agent/user/Routines/linkedin-remote-jobs/learnings.md and /agent/user/Routines/linkedin-remote-jobs/seen_urls.txt first. Include only listings that appear active and are explicitly open worldwide or to applicants in Indonesia/Asia; exclude postings restricted to other countries. Do not assume that a listing is worldwide just because the employer operates globally. Do not claim eligibility, posting dates, or requirements that the source does not confirm. For each new eligible listing, include the role, employer, location/eligibility, posting date if shown, a brief fit note, and the direct LinkedIn URL. Do not repeat any URL already in seen_urls.txt, and do not contact employers or apply. If there are new verified matches, email the user at italiani1119@gmail.com with the findings and then append the included URLs to seen_urls.txt. If there are no new matches, send nothing. Add any correction the user gives you to learnings.md.
+
+      For the alert email, use Resend and send from Ita Liani <reminder@r2studio.my.id> to italiani1119@gmail.com.
+
+      Only include listings whose posting age is verifiably between 24 hours and 7 days at the time of the run. Exclude listings newer than 24 hours, older than 7 days, or without a verifiable posting age.
+
+  - id: 6ad96931eb9db68c86c18bd9
+    name: LinkedIn post drafts
+    enabled: true
+    schedule:
+      type: daily
+      time: "08:00"
+      timezone: Asia/Jakarta
+    instructions: |
+      Every day at 8:00 AM, draft the LinkedIn post that will be published on the user's personal LinkedIn profile (Ita Liani) at 10:00 AM. Read /agent/user/Routines/linkedin-daily-posts/learnings.md and /agent/user/Routines/linkedin-daily-posts/last_topic.txt (if it exists) first. Pick a topic different from the one in last_topic.txt, rotating among: procurement (sourcing, vendor management, cost savings, RFQ/RFP, purchase orders, supplier negotiation), executive assistant (calendar management, inbox zero, meeting prep, travel coordination, stakeholder communication, executive support), or personal assistant (task management, prioritization, remote work productivity, time blocking). Write the post in English, in a natural human-editor voice (never robotic or AI-sounding): 150-250 words, open with a hook, include one short personal insight or practical tip, end with a light question, and include 3-5 relevant hashtags (e.g. #Procurement #ExecutiveAssistant #RemoteWork #PersonalAssistant #VirtualAssistant #AdminLife). The purpose of these posts is personal branding: the user has not yet landed her first remote job, so every post should position her as a strong, hireable remote-work candidate in procurement, executive assistance, or personal assistance — showcasing her skills, reliability and value so recruiters and hiring managers want to reach out. Save the topic name to /agent/user/Routines/linkedin-daily-posts/last_topic.txt and the exact post text to /agent/user/Routines/linkedin-daily-posts/pending.md (overwrite any previous content). Then email the user at italiani1119@gmail.com the full draft with subject 'LinkedIn post preview — posting today at 10:00', noting it will be posted at 10:00 AM and they can reply to change or cancel it before then.
+
+  - id: 6ad967f22e49feeef81fc557
+    name: Daily LinkedIn post
+    enabled: true
+    schedule:
+      type: daily
+      time: "10:00"
+      timezone: Asia/Jakarta
+    instructions: |
+      Post one LinkedIn post on the user's personal LinkedIn profile (Ita Liani) every day at 10:00 AM. First read /agent/user/Routines/linkedin-daily-posts/pending.md — if it exists, post exactly that text. If it does not exist, write the post yourself following the writing rules below. Post it publicly (PUBLIC visibility) on the user's profile using the connected LinkedIn account. After posting, append the new post's URN to /agent/user/Routines/linkedin-daily-posts/post_urns.txt (one per line) so the comment-check routine can find it. Then message the user a one-line summary of the post (topic + the first few words), then delete /agent/user/Routines/linkedin-daily-posts/pending.md. Writing rules: English, natural human-editor voice (never robotic or AI-sounding); topics rotating so no two consecutive days repeat: procurement (sourcing, vendor management, cost savings, RFQ/RFP, purchase orders, supplier negotiation), executive assistant (calendar management, inbox zero, meeting prep, travel coordination, stakeholder communication, executive support), or personal assistant (task management, prioritization, remote work productivity, time blocking); 150-250 words; open with a hook; include one short personal insight or practical tip; end with a light question; 3-5 relevant hashtags (e.g. #Procurement #ExecutiveAssistant #RemoteWork #PersonalAssistant #VirtualAssistant #AdminLife). The purpose of these posts is personal branding: the user has not yet landed her first remote job, so every post should position her as a strong, hireable remote-work candidate in procurement, executive assistance, or personal assistance — showcasing her skills, reliability and value so recruiters and hiring managers want to reach out. Read /agent/user/Routines/linkedin-daily-posts/learnings.md first and add any correction the user gives there.
+
+  - id: 6ad96be3d837bde634e51fc2
+    name: LinkedIn comment reply drafts
+    enabled: true
+    schedule:
+      type: weekday_multi_time
+      days: [Mon, Tue, Wed, Thu, Fri]
+      times: ["08:00", "10:00", "12:00", "14:00", "16:00", "18:00"]
+      timezone: Asia/Jakarta
+    instructions: |
+      Check the user's LinkedIn posts for new comments and draft replies. Read /agent/user/Routines/linkedin-daily-posts/post_urns.txt — each line is a post URN of a post the user published (the Daily LinkedIn post routine appends the URN of each post it publishes). For each post URN, fetch its comments with the LinkedIn retrieve-comments-shares action. For each comment that is not already listed in /agent/user/Routines/linkedin-daily-posts/replied_comments.txt, write a reply draft in English in a natural human voice (never robotic or AI-sounding — short, warm, conversational, like a real person answering on LinkedIn; thank them, engage with what they said, and keep it under 3 sentences; never use hashtags or emoji spam). Save each draft to /agent/user/Routines/linkedin-daily-posts/reply_drafts/<post-urn>/<comment-id>.md with the commenter's name and the draft text. Then email the user at italiani1119@gmail.com with subject 'LinkedIn comment replies — drafts ready' listing each new comment (who commented, what they said, and the draft reply), noting the drafts are saved and she can reply to approve, edit, or reject them. Do not post any reply to LinkedIn — drafts only. After emailing, append each handled comment id to /agent/user/Routines/linkedin-daily-posts/replied_comments.txt so it is not drafted again. If there are no new comments, send nothing and end quietly.
